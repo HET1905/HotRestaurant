@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tables Page</title>
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="jumbotron text-center">
+      <h1><span class="fa fa-fire"></span>Hot Restaurants</h1>
+      <h3>Current Reservations and Waiting List</h3>
+      <hr>
+      <div>
+        <a href="/reservation"><button class="btn btn-danger btn-lg">
+            Make Reservations</button>
+        </a>
+        <a href="/"><button class="btn btn-danger btn-lg">
+            Home</button>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Reserved Tables</h5>
+        <div class="card-text" id="reservedTables">
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Waiting List</h5>
+        <div class="card-text" id="waitingList">
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <footer class="footer">
+      <div class="container">
+        <p><a href="/api/tables">/api/tables</a> | <a href="/api/waitingList">/api/waitingList</a> </p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function getDataFromTable() {
+      $.get("/api/tables", function (data) {
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+          var newH2 = $('<h2>');
+          var newPhNo = $("<p>");
+          var newEmail = $('<p>');
+          var newHr = $('<hr>');
+          newH2.text(parseInt(i) + 1 + "  " + data[i].name);
+          newPhNo.text(data[i].phNo);
+          newEmail.text(data[i].email );
+          $("#reservedTables").append(newH2,newPhNo,newEmail,newHr);
+        }
+
+      });
+    }
+
+    function waitingListData() {
+      $.get("/api/waitingList", function (data) {
+        console.log(data);
+        for (var i = 0; i < data.length; i++) {
+          var newH2 = $('<h2>');
+          var newPhNo = $("<p>");
+          var newEmail = $('<p>');
+          var newHr = $('<hr>');
+          newH2.text(parseInt(i) + 1 + "  " + data[i].name);
+          newPhNo.text(data[i].phNo);
+          newEmail.text(data[i].email );
+          $("#waitingList").append(newH2,newPhNo,newEmail,newHr);
+        }
+
+      });
+    }
+    getDataFromTable();
+    waitingListData();
+  </script>
+
+</body>
+
+</html>

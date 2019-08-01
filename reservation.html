@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Page</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1><span class="fa fa-fire"></span>Hot Restaurants</h1>
+            <h3>Reservation Page</h3>
+            <hr>
+            <div>
+                <a href="/"><button class="btn btn-danger btn-lg">
+                        Home</button>
+                </a>
+                <a href="/tables"><button class="btn btn-danger btn-lg">
+                        ViewTables</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" role="form">
+                    <div class="form-group">
+                        <label for="Name">Name :</label>
+                        <input class="form-control" type="text" placeholder="Enter your name ..." id="txtName">
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone No:">Phone No :</label>
+                        <input class="form-control" type="text" placeholder="" id="txtPhNo">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email :</label>
+                        <input class="form-control" type="text" placeholder="" id="txtEmail">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p><a href="/api/tables">/api/tables</a> | <a href="/api/waitingList">/api/waitingList</a> </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        $('#submit').on('click', function () {
+            // alert('inside submit');
+            var newWaiting = {
+                name: $('#txtName').val().trim(),
+                phNo: $('#txtPhNo').val().trim(),
+                email: $('#txtEmail').val().trim()
+            };
+            console.log(newWaiting);
+
+
+            $.post('/api/tables', newWaiting, function (data) {
+                if (data == true) {
+                    alert('Your reservation is done...');
+                } else if (data == false) {
+                    alert('We don\'t have tables, come again........');
+                }
+            })
+
+            $('#txtName').val('');
+            $('#txtPhNo').val('');
+            $('#txtEmail').val('');
+
+            return false;
+        });
+    </script>
+
+</body>
+
+</html>
